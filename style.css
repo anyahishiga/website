@@ -202,10 +202,10 @@ nav {
 }
 .restaurant-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
 .card-img {
-  width: 100%; height: 200px;
-  object-fit: cover; display: block;
-  background: linear-gradient(135deg, var(--cream-dark), var(--brown-mid));
-  font-size: 4rem; display: flex; align-items: center; justify-content: center;
+  width: 100%; 
+  height: 200px;
+  object-fit: cover; /* Cắt cúp ảnh cho vừa khung mà không làm méo ảnh */
+  display: block;
 }
 .card-badge {
   position: absolute; top: 12px; left: 12px;
@@ -398,8 +398,13 @@ nav {
 
 /* ===== PHẦN BAN ĐẦU DANH MỤC LOẠI ẨM THỰC ===== */
 .category-pills {
-  display: flex; gap: 12px; overflow-x: auto;
-  padding: 24px 32px 8px; scrollbar-width: none;
+display: flex; 
+  gap: 12px; 
+  overflow-x: auto;
+  padding: 24px 32px 8px; 
+  scrollbar-width: none;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 .category-pills::-webkit-scrollbar { display: none; }
 .category-pill {
@@ -444,3 +449,84 @@ nav {
 
   scroll-snap-align: start;
 }
+
+
+
+/* ===== GIAO DIỆN CUỘN TRÀN VIỀN (FULL-WIDTH) ===== */
+.full-width-section {
+  max-width: 100% !important; /* Xóa giới hạn 1200px */
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  position: relative;
+}
+
+.featured-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Ghi đè lại .featured-strip hiện tại */
+.featured-strip {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  padding: 16px 32px; /* Tạo khoảng trống 2 bên và shadow */
+  scrollbar-width: none; /* Ẩn thanh cuộn (Firefox) */
+  -ms-overflow-style: none; /* Ẩn thanh cuộn (IE) */
+  width: 100%;
+}
+.featured-strip::-webkit-scrollbar {
+  display: none; /* Ẩn thanh cuộn (Chrome/Safari) */
+}
+
+/* Định dạng nút cuộn trái/phải */
+.scroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--white);
+  color: var(--red);
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  box-shadow: var(--shadow-lg);
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.scroll-btn:hover {
+  background: var(--red);
+  color: var(--white);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.scroll-btn.left {
+  left: 16px;
+}
+
+.scroll-btn.right {
+  right: 16px;
+}
+
+/* Ẩn nút khi xem trên điện thoại (để người dùng vuốt) */
+@media (max-width: 640px) {
+  .scroll-btn {
+    display: none;
+  }
+  .featured-strip {
+    padding: 16px;
+  }
+}
+
+
+
