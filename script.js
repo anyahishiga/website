@@ -12,6 +12,19 @@ const CUISINES = [
   { name: 'Cà phê' },
   { name: 'Bánh ngọt' }
 ];
+// list 1 nhà hàng 
+// id: '--------------',
+//  name: '------------',
+//   cuisine: '------------',
+//   district: '------------',
+//   address: '------------',
+//   price: '------------',
+//   tags: ['------------', '------------', '------------'],
+//   featured: true
+//   image: '------------'
+// ========================
+
+
 
 const BASE_RESTAURANTS = [
   // ── QUẬN 1 ──
@@ -24,6 +37,7 @@ const BASE_RESTAURANTS = [
     price: '₫',
     tags: ['giá rẻ', 'đặc biệt', 'phải thử'],
     featured: true
+
   },
   {
     id: 'com-tam-ba-ghien',
@@ -648,16 +662,16 @@ function getRestaurantRating(id) {
 // =========================
 
 function renderCard(r) {
-  const { avg, count } =
-    getRestaurantRating(r.id);
-
+  const { avg, count } = getRestaurantRating(r.id);
+  const imgUrl = r.image || 'https://via.placeholder.com/300x200?text=No+Image';
   return `
     <div
       class="restaurant-card"
-      onclick="showDetail('${r.id}')"
-    >
+      onclick="showDetail('${r.id}')">
 
-      <div class="card-img"></div>
+      <div class="card-img">
+      <img src="${imgUrl}" alt="${r.name}">
+      </div>
 
       <div class="card-body">
 
@@ -675,16 +689,15 @@ function renderCard(r) {
         </div>
 
         <div class="card-footer">
-          ${
-            count
-              ? `
+          ${count
+      ? `
                 ${renderStars(Math.round(avg))}
                 <span>
                   ${avg} (${count})
                 </span>
               `
-              : '<span>Chưa có đánh giá</span>'
-          }
+      : '<span>Chưa có đánh giá</span>'
+    }
         </div>
 
         <div class="card-tags">
@@ -774,8 +787,8 @@ function filterCuisine(cuisine) {
 
 function filterDistrict(district) {
   activeFilters.district = district;
-  activeFilters.cuisine  = 'all';
-  activeFilters.price    = 'all';
+  activeFilters.cuisine = 'all';
+  activeFilters.price = 'all';
   // sync dropdown
   const sel = document.querySelector('.filter-select');
   if (sel) sel.value = district;
@@ -797,9 +810,9 @@ function setFilter(type, value, btn) {
 function getFilteredRestaurants() {
   return restaurants.filter(r => {
     return (
-      (activeFilters.cuisine  === 'all' || r.cuisine  === activeFilters.cuisine)  &&
+      (activeFilters.cuisine === 'all' || r.cuisine === activeFilters.cuisine) &&
       (activeFilters.district === 'all' || r.district === activeFilters.district) &&
-      (activeFilters.price    === 'all' || r.price    === activeFilters.price)
+      (activeFilters.price === 'all' || r.price === activeFilters.price)
     );
   });
 }
@@ -843,11 +856,11 @@ function showDetail(id) {
 
   const { avg, count } = getRestaurantRating(id);
 
-  $('#detailCuisine').textContent   = r.cuisine;
-  $('#detailName').textContent      = r.name;
+  $('#detailCuisine').textContent = r.cuisine;
+  $('#detailName').textContent = r.name;
   $('#detailRatingNum').textContent = avg || '0';
   $('#detailReviewCount').textContent = count;
-  $('#detailStars').innerHTML       = renderStars(Math.round(avg));
+  $('#detailStars').innerHTML = renderStars(Math.round(avg));
 
   $('#detailInfo').innerHTML = `
     <div> ${r.address}</div>
@@ -903,8 +916,8 @@ function populateReviewSelect() {
 
 function submitReview() {
   const restaurantId = $('#reviewRestaurantSelect').value;
-  const author       = $('#reviewAuthor').value.trim();
-  const comment      = $('#reviewComment').value.trim();
+  const author = $('#reviewAuthor').value.trim();
+  const comment = $('#reviewComment').value.trim();
 
   if (!restaurantId || !author || !comment || !selectedStars) {
     showToast('Vui lòng nhập đầy đủ');
@@ -929,15 +942,15 @@ function submitReview() {
 // SEARCH
 // =========================
 
-function handleHeroSearch() {}
+function handleHeroSearch() { }
 
 function doHeroSearch() {
   const keyword = $('#heroSearch').value.toLowerCase();
 
   const result = restaurants.filter(r =>
-    r.name.toLowerCase().includes(keyword)    ||
+    r.name.toLowerCase().includes(keyword) ||
     r.cuisine.toLowerCase().includes(keyword) ||
-    r.district.toLowerCase().includes(keyword)||
+    r.district.toLowerCase().includes(keyword) ||
     r.tags.some(t => t.toLowerCase().includes(keyword))
   );
 
@@ -987,3 +1000,25 @@ $('#featuredStrip').innerHTML =
     .filter(r => r.featured)
     .map(renderCard)
     .join('');
+
+
+
+
+
+
+
+//thanh di chuyển nổi bật 
+// Hàm xử lý khi bấm nút mũi tên trái/phải
+function scrollFeatured(direction) {
+  const strip = document.getElementById('featuredStrip');
+
+  // Chiều rộng cuộn bằng 1 card + khoảng cách (gap)
+  // Tính trung bình mỗi card rộng khoảng 320px + 20px gap
+  const scrollAmount = 340;
+
+  if (direction === 'left') {
+    strip.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+  } else if (direction === 'right') {
+    strip.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  }
+}
