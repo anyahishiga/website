@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<!--Thanh Điều Hướng-->
+<!--Thanh Điều Hướng--> 
 <nav>
   <div class="nav-logo" onclick="showPage('home')">H&S Eat</div>
   <div class="nav-links">
@@ -42,15 +42,17 @@
   <div class="category-pills" id="categoryPills"></div>
 
   <!-- Nổi Bật  -->
-  <div class="section">
-    
-    <div class="section-header">
+  <div class="section full-width-section">
+    <div class="section-header" style="max-width: 1200px; margin: 0 auto 32px; padding: 0 32px;">
       <div class="section-title">Được yêu thích <span>nhất</span></div>
-      
       <span class="section-link" onclick="showPage('browse'); setActiveNav(document.querySelectorAll('.nav-btn')[1])">Xem tất cả →</span>
     </div>
-    <div class="featured-strip" id="featuredStrip"></div>
-    <div class="featured-strip" id="featuredStrip"></div>
+    
+    <div class="featured-wrapper">
+      <button class="scroll-btn left" onclick="scrollFeatured('left')">❮</button>
+      <div class="featured-strip" id="featuredStrip"></div>
+      <button class="scroll-btn right" onclick="scrollFeatured('right')">❯</button>
+    </div>
   </div>
 
   <!-- Browse by district -->
