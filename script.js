@@ -670,7 +670,7 @@ function renderCard(r) {
         </div>
 
         <div class="card-meta">
-          <span>📍 ${r.district}</span>
+          <span> ${r.district}</span>
           <span>${r.price}</span>
         </div>
 
@@ -739,13 +739,13 @@ function renderHome() {
   });
 
   const districtEmoji = {
-    'Quận 1': '🏙️', 'Quận 3': '🌿', 'Quận 4': '🌊',
-    'Quận 5': '🏮', 'Quận 6': '🎋', 'Quận 7': '🏢',
-    'Quận 8': '🛶', 'Quận 10': '🏫', 'Quận 11': '🎪',
-    'Quận Bình Thạnh': '🌉', 'Quận Gò Vấp': '🍃',
-    'Quận Tân Bình': '✈️', 'Quận Phú Nhuận': '🌸',
-    'Quận Tân Phú': '🛍️', 'Quận Bình Tân': '🏭',
-    'TP. Thủ Đức': '🎓'
+    'Quận 1': '', 'Quận 3': '', 'Quận 4': '',
+    'Quận 5': '', 'Quận 6': '', 'Quận 7': '',
+    'Quận 8': '', 'Quận 10': '', 'Quận 11': '',
+    'Quận Bình Thạnh': '', 'Quận Gò Vấp': '',
+    'Quận Tân Bình': '', 'Quận Phú Nhuận': '',
+    'Quận Tân Phú': '', 'Quận Bình Tân': '',
+    'TP. Thủ Đức': ''
   };
 
   const districtGrid = $('#districtGrid');
@@ -754,7 +754,7 @@ function renderHome() {
       .sort((a, b) => b[1] - a[1])
       .map(([d, cnt]) => `
         <div class="district-card" onclick="filterDistrict('${d}')">
-          <span class="district-emoji">${districtEmoji[d] || '📍'}</span>
+          <span class="district-emoji">${districtEmoji[d] || ''}</span>
           <div class="district-name">${d}</div>
           <div class="district-count">${cnt} quán</div>
         </div>
@@ -850,7 +850,7 @@ function showDetail(id) {
   $('#detailStars').innerHTML       = renderStars(Math.round(avg));
 
   $('#detailInfo').innerHTML = `
-    <div>📍 ${r.address}</div>
+    <div> ${r.address}</div>
     <div>🏘️ ${r.district}</div>
     <div>💰 ${r.price}</div>
   `;
