@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>H&S Eat — Khám phá ẩm thực Sài Gòn</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!--Thanh Điều Hướng-->
+<nav>
+  <div class="nav-logo" onclick="showPage('home')">H&S Eat</div>
+  <div class="nav-links">
+    <button class="nav-btn active" onclick="showPage('home'); setActiveNav(this)">Trang chủ</button>
+    <button class="nav-btn" onclick="showPage('browse'); setActiveNav(this)">Khám phá</button>
+    <button class="nav-btn-add" onclick="showPage('addReview')">+ Viết đánh giá</button>
+  </div>
+</nav>
+
+<!-- ========== trang chủ  ========== -->
+<div id="page-home" class="page active">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-eyebrow"> Thành phố Hồ Chí Minh</div>
+    <h1>Sài Gòn <em>Ăn Gì</em><br>Hôm Nay?</h1>
+    <p>Khám phá hàng trăm nhà hàng, quán ăn và món ngon đặc sắc khắp Sài Gòn</p>
+    <div class="hero-search">
+      <input type="text" id="heroSearch" placeholder="Tìm quán, món ăn, quận..." oninput="handleHeroSearch(this.value)">
+      <button onclick="doHeroSearch()">Tìm kiếm</button>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num" id="statRestaurants">0</span><span class="hero-stat-label">Nhà hàng</span></div>
+      <div class="hero-stat"><span class="hero-stat-num" id="statReviews">0</span><span class="hero-stat-label">Đánh giá</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">19</span><span class="hero-stat-label">Quận/Huyện</span></div>
+    </div>
+  </div>
+
+  <!-- Danh mục  -->
+  <div class="category-pills" id="categoryPills"></div>
+
+  <!-- Nổi Bật  -->
+  <div class="section">
+    
+    <div class="section-header">
+      <div class="section-title">Được yêu thích <span>nhất</span></div>
+      
+      <span class="section-link" onclick="showPage('browse'); setActiveNav(document.querySelectorAll('.nav-btn')[1])">Xem tất cả →</span>
+    </div>
+    <div class="featured-strip" id="featuredStrip"></div>
+    <div class="featured-strip" id="featuredStrip"></div>
+  </div>
+
+  <!-- Browse by district -->
+  <div style="background: var(--white); padding: 16px 0;">
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">Khám phá theo <span>Quận</span></div>
+      </div>
+      <div class="district-grid" id="districtGrid"></div>
+    </div>
+  </div>
+
+  <!-- All restaurants -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">Tất cả <span>quán ăn</span></div>
+    </div>
+    <div class="restaurant-grid" id="homeGrid"></div>
+  </div>
+</div>
+
+<!-- ========== trang khám phá  ========== -->
+<div id="page-browse" class="page">
+  <div class="filter-bar">
+    <span class="filter-label">Lọc:</span>
+    <button class="filter-chip active" onclick="setFilter('cuisine','all',this)">Tất cả</button>
+    <button class="filter-chip" onclick="setFilter('cuisine','Phở',this)"> Phở</button>
+    <button class="filter-chip" onclick="setFilter('cuisine','Bánh mì',this)"> Bánh mì</button>
+    <button class="filter-chip" onclick="setFilter('cuisine','Cơm tấm',this)"> Cơm tấm</button>
+    <button class="filter-chip" onclick="setFilter('cuisine','Hải sản',this)"> Hải sản</button>
+    <button class="filter-chip" onclick="setFilter('cuisine','Bún bò',this)"> Bún bò</button>
+    <button class="filter-chip" onclick="setFilter('cuisine','Lẩu',this)">🫕 Lẩu</button>
+    <select class="filter-select" onchange="setFilter('district',this.value)">
+      <option value="all">Tất cả quận</option>
+    </select>
+    <select class="filter-select" onchange="setFilter('price',this.value)">
+      <option value="all">Giá cả</option>
+      <option value="₫">₫ Bình dân</option>
+      <option value="₫₫">₫₫ Trung bình</option>
+      <option value="₫₫₫">₫₫₫ Cao cấp</option>
+    </select>
+  </div>
+  <div class="section">
+    <div id="browseCount" style="font-size:0.9rem;color:var(--gray);margin-bottom:20px;font-weight:600;"></div>
+    <div class="restaurant-grid" id="browseGrid"></div>
+  </div>
+</div>
+
+<!-- ==========chi tiết quán  ========== -->
+<div id="page-detail" class="page">
+  <div class="detail-hero" id="detailHero">
+    <button class="detail-hero-back" onclick="history.back(); goBack()">←</button>
+    <span id="detailEmoji" style="font-size:7rem"></span>
+  </div>
+  <div class="detail-content">
+    <div class="detail-header">
+      <div>
+        <div class="detail-cuisine" id="detailCuisine"></div>
+        <div class="detail-name" id="detailName"></div>
+      </div>
+      <div class="detail-rating-box">
+        <span class="detail-rating-num" id="detailRatingNum">—</span>
+        <div class="stars" id="detailStars" style="justify-content:center;margin:4px 0;"></div>
+        <div class="detail-rating-label"><span id="detailReviewCount">0</span> đánh giá</div>
+      </div>
+    </div>
+    <div class="detail-info" id="detailInfo"></div>
+    <div class="detail-tags" id="detailTags"></div>
+    <button class="btn-submit" style="margin-bottom:32px;" onclick="showPage('addReview'); document.getElementById('reviewRestaurantSelect').value = currentDetailId;">
+       Viết đánh giá cho quán này
+    </button>
+    <div class="reviews-section">
+      <div class="reviews-title">Đánh giá từ cộng đồng</div>
+      <div id="detailReviews"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== nút review quán ========== -->
+<div id="page-addReview" class="page">
+  <div class="add-review-page">
+    <div class="form-title"> Viết đánh giá</div>
+    <div class="form-subtitle">Chia sẻ trải nghiệm ẩm thực của bạn với cộng đồng</div>
+
+    <div class="form-group">
+      <label class="form-label">Chọn nhà hàng *</label>
+      <select class="form-select" id="reviewRestaurantSelect"></select>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Tên của bạn *</label>
+        <input class="form-input" type="text" id="reviewAuthor" placeholder="VD: Nguyễn Minh">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Ngày ăn</label>
+        <input class="form-input" type="date" id="reviewDate">
+      </div>
+    </div>
+
+
+     <!-- ========== đánh giá sao ========== -->
+    <div class="form-group">
+      <label class="form-label">Đánh giá sao *</label>
+      <div class="star-rating" id="starRating">
+        <button class="star-btn" data-val="1" onclick="setStarRating(1)">★</button>
+        <button class="star-btn" data-val="2" onclick="setStarRating(2)">★</button>
+        <button class="star-btn" data-val="3" onclick="setStarRating(3)">★</button>
+        <button class="star-btn" data-val="4" onclick="setStarRating(4)">★</button>
+        <button class="star-btn" data-val="5" onclick="setStarRating(5)">★</button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Nhận xét *</label>
+      <textarea class="form-textarea" id="reviewComment" placeholder="Mô tả trải nghiệm của bạn: món ăn, không gian, phục vụ..."></textarea>
+    </div>
+
+    <button class="btn-submit" onclick="submitReview()">Gửi đánh giá 🎉</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
