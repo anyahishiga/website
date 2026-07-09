@@ -1,0 +1,16 @@
+/* ===== ĐÁP ỨNG ===== */
+@media (max-width: 640px) {
+  nav { padding: 0 16px; }
+  .nav-links { display: none; }
+  .hero { padding: 48px 16px 40px; }
+  .hero-stats { gap: 24px; }
+  .filter-bar { padding: 12px 16px; top: 56px; }
+  .section { padding: 32px 16px; }
+  .form-row { grid-template-columns: 1fr; }
+  .detail-content { padding: 20px 16px; }
+  .add-review-page { padding: 32px 16px; }
+  .detail-hero { height: 220px; font-size: 5rem; }
+  
+  .scroll-btn { display: none; }
+  .featured-strip { padding: 16px; }
+}

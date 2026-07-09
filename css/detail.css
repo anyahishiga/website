@@ -1,0 +1,30 @@
+/* ===== CHI TIẾT NHÀ HÀNG ===== */
+.detail-hero {
+  height: 320px; width: 100%;
+  font-size: 8rem; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, var(--brown), var(--brown-mid)); position: relative;
+}
+.detail-hero-back {
+  position: absolute; top: 16px; left: 16px;
+  background: rgba(0,0,0,0.5); color: var(--white);
+  border: none; border-radius: 50%;
+  width: 40px; height: 40px; font-size: 1.2rem;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.detail-hero-back:hover { background: rgba(0,0,0,0.8); }
+.detail-content { max-width: 900px; margin: 0 auto; padding: 32px; }
+.detail-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; }
+.detail-cuisine { font-size: 0.8rem; font-weight: 700; letter-spacing: 2px; color: var(--red); text-transform: uppercase; margin-bottom: 6px; }
+.detail-name { font-family: var(--font-display); font-size: 2.4rem; font-weight: 900; color: var(--brown); line-height: 1.2; }
+.detail-rating-box { background: var(--brown); border-radius: var(--radius); padding: 16px 24px; text-align: center; }
+.detail-rating-num { font-family: var(--font-display); font-size: 3rem; font-weight: 900; color: var(--gold-light); display: block; line-height: 1; }
+.detail-rating-label { font-size: 0.75rem; color: rgba(253,246,236,0.6); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+.detail-info { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 24px; }
+.detail-info-item { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: var(--brown-mid); }
+.detail-info-icon { font-size: 1.1rem; }
+.detail-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+.detail-tag {
+  background: var(--cream-dark); color: var(--brown-mid);
+  font-size: 0.82rem; font-weight: 600; padding: 6px 14px; border-radius: 16px;
+}
